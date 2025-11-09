@@ -1,0 +1,44 @@
+# === DGX System Snapshot Repository ===
+# Ignore temporary, volatile, and sensitive paths.
+
+# 1. Staging area (sanitized build workspace)
+staging/
+staging/**
+
+# 2. Archives and compressed backups
+*.tar.gz
+*.tgz
+*.zip
+
+# 3. Logs and summaries
+*.log
+/tmp/
+rclone-upload.log
+system-config-snapshot.log
+
+# 4. System and environment artifacts
+.cache/
+*.pid
+*.lock
+
+# 5. Secrets and restricted data (should never be committed)
+etc/shadow*
+etc/gshadow*
+etc/ssl/private/
+etc/pki/pesign/
+etc/selinux/targeted/active/
+
+# 6. OS-generated files
+*.swp
+*.bak
+*.tmp
+*.old
+
+# 7. Local metadata files (optional but useful)
+summary-*.txt
+snapshot-meta-*.txt
+
+# 8. Prevent accidental recursion
+*.tar
+*.iso
+*.img
