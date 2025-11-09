@@ -1,34 +1,18 @@
 # ============================================================
-# DGX System Snapshot — Enterprise-Grade .gitignore
-# ============================================================
-# Purpose:
-#   Keep version control limited to reproducible, host-level configs.
-#   Exclude transient, vendor, and sensitive system content.
+# DGX System Snapshot — Hardened Git Ignore Rules (Corrected)
 # ============================================================
 
-# --- Global ignore defaults ---
 # Ignore everything by default
 *
 
-# --- Whitelist (allow) key config areas ---
+# --- Whitelist top-level structure (must appear BEFORE any deeper exclusions) ---
 !.gitignore
 !README.md
+!meta/
 !etc/
 !libvirt/
-!meta/
 
-# --- Explicit exclusions inside etc/ ---
-# OS/vendor-provided, generated, or secret-heavy areas
-etc/pki/
-etc/crypto-policies/
-etc/alternatives/
-etc/dconf/
-etc/fonts/
-etc/X11/
-etc/java/
-etc/gdm/
-etc/motd.d/
-etc/issue.d/
+# --- Exclude sensitive and runtime files inside etc ---
 etc/ssh/ssh_host_*
 etc/ssl/private/
 etc/pki/pesign/
@@ -40,30 +24,36 @@ etc/passwd-
 etc/group-
 etc/subuid-
 etc/subgid-
+etc/pki/
+etc/crypto-policies/
+etc/alternatives/
+etc/dconf/
+etc/fonts/
+etc/X11/
+etc/java/
+etc/gdm/
+etc/motd.d/
+etc/issue.d/
 
-# --- libvirt hygiene ---
-# Keep only definitions, ignore transient runtime data
+# --- Exclude transient libvirt data ---
 libvirt/images/
 libvirt/snapshots/
 libvirt/dumps/
 libvirt/private/
 
-# --- meta hygiene ---
-# Allow metadata manifests and summaries, ignore temp artifacts
+# --- Meta rules ---
 !meta/
 meta/*.txt
 !meta/snapshot-meta-*.txt
 !meta/summary-*.txt
 
-# --- Local staging and transient areas ---
+# --- Ignore local build artifacts ---
 staging/
 tmp/
 var/
 run/
 cache/
 swap/
-
-# --- Archives and logs ---
 *.tar
 *.tar.gz
 *.tgz
@@ -75,26 +65,14 @@ swap/
 *.swp
 *.pid
 *.lock
-rclone-upload.log
-system-config-snapshot.log
-
-# --- Prevent recursion and binary noise ---
 *.iso
 *.img
 *.qcow2
 *.vmdk
-
-# --- Editor/system detritus ---
 .DS_Store
 Thumbs.db
 
 # ============================================================
-# Result:
-#   Tracks only clean, deterministic configuration snapshots:
-#     - etc/   → sanitized system configuration
-#     - libvirt/ → VM and network definitions
-#     - meta/  → snapshot manifests + summaries
-#   Fully ignores:
-#     - staging/ temp areas
-#     - binary, runtime, and vendor OS content
+# Tracks: etc/, libvirt/, meta/
+# Ignores: staging/, transient data, binaries, credentials
 # ============================================================
