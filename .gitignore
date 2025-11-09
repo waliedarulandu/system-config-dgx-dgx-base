@@ -1,18 +1,23 @@
 # ============================================================
-# DGX System Snapshot — Hardened Git Ignore Rules (Corrected)
+# DGX System Snapshot — Final Enterprise .gitignore (fixed)
 # ============================================================
 
 # Ignore everything by default
 *
 
-# --- Whitelist top-level structure (must appear BEFORE any deeper exclusions) ---
+# --- Allowlisted root paths ---
 !.gitignore
 !README.md
 !meta/
 !etc/
 !libvirt/
 
-# --- Exclude sensitive and runtime files inside etc ---
+# --- Recursively allow contents under these dirs ---
+!etc/**
+!libvirt/**
+!meta/**
+
+# --- Exclude sensitive and vendor-heavy content ---
 etc/ssh/ssh_host_*
 etc/ssl/private/
 etc/pki/pesign/
@@ -35,25 +40,21 @@ etc/gdm/
 etc/motd.d/
 etc/issue.d/
 
-# --- Exclude transient libvirt data ---
+# --- libvirt transient data ---
 libvirt/images/
 libvirt/snapshots/
 libvirt/dumps/
 libvirt/private/
 
-# --- Meta rules ---
-!meta/
-meta/*.txt
-!meta/snapshot-meta-*.txt
-!meta/summary-*.txt
-
-# --- Ignore local build artifacts ---
+# --- Local/transient paths ---
 staging/
 tmp/
 var/
 run/
 cache/
 swap/
+
+# --- Archives, logs, misc ---
 *.tar
 *.tar.gz
 *.tgz
@@ -71,8 +72,3 @@ swap/
 *.vmdk
 .DS_Store
 Thumbs.db
-
-# ============================================================
-# Tracks: etc/, libvirt/, meta/
-# Ignores: staging/, transient data, binaries, credentials
-# ============================================================
